@@ -137,3 +137,20 @@ GET  /api/v1/tracking/public/:awbNumber → customer-facing tracking
 3. Fill in the stubbed integrations one at a time as vendor sandbox access becomes available
 4. Add automated tests (Jest + supertest recommended) before production deployment
 5. Add explicit indexes (`schema.index(...)`) on any additional high-traffic query fields as data volume grows
+
+
+## Enhanced completion package
+
+This version adds explicit operational entities/endpoints that were not represented as first-class resources in the original scaffold:
+
+- `/api/v1/operations/vehicles` — vehicle master + GPS/location update
+- `/api/v1/operations/vessels` — vessel/voyage master
+- `/api/v1/operations/delivery-orders` — delivery order create/approve/issue
+- `/api/v1/operations/uld-allocations` — ULD allocation transaction
+- `/api/v1/operations/flight-loading` — flight loading transaction
+- `/api/v1/operations/cargo-movements` — cargo movement history
+- `/api/v1/operations/audit-logs` — central audit-log listing
+- `/api/v1/files` — authenticated multipart file upload with validation
+- Public tracking now also supports transshipment and vehicle references.
+
+These additions improve the internal business-workflow coverage. They do **not** fabricate third-party connectivity. Real ICEGATE, GST/IRP, airline, freight-forwarder, ERP, X-Ray/ETD, SMS/email/WhatsApp and payment-gateway connectivity still requires the real vendor contracts, credentials, certificates, SDKs and sandbox/webhook details.

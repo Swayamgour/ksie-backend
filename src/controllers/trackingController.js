@@ -1,4 +1,4 @@
-import { ShipmentTracking, AirShipment, Container, CourierShipment } from '../models/index.js';
+import { ShipmentTracking, AirShipment, Container, CourierShipment, Transshipment, Vehicle } from '../models/index.js';
 import { createCrudController } from './factory.js';
 import { catchAsync } from '../utils/catchAsync.js';
 import { sendResponse } from '../utils/ApiResponse.js';
@@ -19,18 +19,20 @@ export const addTrackingEvent = catchAsync(async (req, res) => {
 export const publicTrack = catchAsync(async (req, res) => {
   const { number } = req.params;
 
-  const [awb, container, courier] = await Promise.all([
+  const [awb, container, courier, transshipment, vehicle] = await Promise.all([
     AirShipment.findOne({ awbNumber: number }),
     Container.findOne({ containerNumber: number }),
     CourierShipment.findOne({ courierNumber: number }),
+    Transshipment.findOne({ transferNumber: number }),
+    Vehicle.findOne({ vehicleNumber: number }),
   ]);
 
-  const match = awb || container || courier;
+  const match = awb || container || courier || transshipment || vehicle;
   if (!match) {
     return sendResponse(res, 404, 'No shipment found for this tracking number', null);
   }
 
-  const referenceType = awb ? 'air_shipment' : container ? 'container' : 'courier_shipment';
+  const referenceType = awb ? 'air_shipment' : container ? 'container' : courier ? 'courier_shipment' : transshipment ? 'transshipment' : 'vehicle';
   const events = await ShipmentTracking.find({ referenceType, referenceId: match._id }).sort({ eventTimestamp: 1 });
 
   return sendResponse(res, 200, 'Tracking information found', { shipment: match, referenceType, events });

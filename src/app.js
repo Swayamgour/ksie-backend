@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
@@ -12,6 +14,7 @@ import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 dotenv.config();
 
 const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ---------- Security & core middleware ----------
 app.use(helmet());
@@ -33,6 +36,7 @@ const apiLimiter = rateLimit({
   message: { success: false, message: 'Too many requests, please try again later.' },
 });
 app.use('/api', apiLimiter);
+app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
 
 // ---------- Health check ----------
 app.get('/health', (req, res) => {

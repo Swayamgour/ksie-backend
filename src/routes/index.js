@@ -21,6 +21,8 @@ import trackingRoutes from './trackingRoutes.js';
 import reportsRoutes from './reportsRoutes.js';
 import notificationRoutes from './notificationRoutes.js';
 import masterRoutes from './masterRoutes.js';
+import operationsRoutes from './operationsRoutes.js';
+import fileRoutes from './fileRoutes.js';
 
 const router = Router();
 
@@ -62,5 +64,7 @@ router.use('/reports', reportsRoutes);
 // MODULE 10 – Admin Panel (Masters) + Notifications
 router.use('/masters', masterRoutes);
 router.use('/notifications', notificationRoutes);
+router.use('/operations', operationsRoutes);
+router.use('/files', fileRoutes);
 
 export default router;

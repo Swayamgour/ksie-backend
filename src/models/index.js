@@ -36,6 +36,14 @@ import { ShipmentTracking } from './ShipmentTracking.js';
 import { ReportLog } from './ReportLog.js';
 import { Notification } from './Notification.js';
 import { Master } from './Master.js';
+import { Vehicle } from './Vehicle.js';
+import { Vessel } from './Vessel.js';
+import { DeliveryOrder } from './DeliveryOrder.js';
+import { UldAllocation } from './UldAllocation.js';
+import { FlightLoading } from './FlightLoading.js';
+import { CargoMovement } from './CargoMovement.js';
+import { CustomsResponse } from './CustomsResponse.js';
+import { AuditLog } from './AuditLog.js';
 
 export const db = {
   Role,
@@ -65,6 +73,7 @@ export const db = {
   ReportLog,
   Notification,
   Master,
+  Vehicle, Vessel, DeliveryOrder, UldAllocation, FlightLoading, CargoMovement, CustomsResponse, AuditLog,
 };
 
 export {
@@ -76,4 +85,5 @@ export {
   Container, GateOperation, Weighment, ContainerStuffing, ReeferOperation,
   Tariff, Invoice, Payment,
   ShipmentTracking, ReportLog, Notification, Master,
+  Vehicle, Vessel, DeliveryOrder, UldAllocation, FlightLoading, CargoMovement, CustomsResponse, AuditLog,
 };
