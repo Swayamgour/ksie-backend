@@ -61,6 +61,7 @@ export const loadFlight = catchAsync(async (req,res) => {
   const loading = await FlightLoading.create({ ...req.body, loadingNumber: req.body.loadingNumber || generateRefNumber('LOAD'), loadedBy: req.user?.id, loadedAt: new Date(), status:'loaded' });
   shipment.status='flight_loaded'; await shipment.save();
   return sendResponse(res,201,'Flight loading recorded',loading);
+  
 });
 
 export const listCargoMovements = createCrudController(CargoMovement, { filterFields: ['referenceType','referenceId','movementType'], entityName: 'Cargo Movement' }).getAll;
